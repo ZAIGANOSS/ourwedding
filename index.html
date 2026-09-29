@@ -29,7 +29,7 @@
             position: relative; 
             width: 100vw; 
             height: 100vh; 
-            max-width: 500px; /* Batas lebar aman untuk tampilan desktop/tablet */
+            max-width: 500px;
             overflow: hidden; 
             background: #1a120b;
         }
@@ -86,7 +86,6 @@
             font-family: var(--font-clear);
         }
 
-        /* Kontainer scene menjaga rasio agar posisi hotspot tidak meleset */
         .scene-container {
             position: relative;
             width: 100%;
@@ -211,7 +210,7 @@
 
         <div id="room-screen">
             <div class="scene-container">
-                <img src="bg.png" class="bg-room" alt="Room Background">
+                <img src="bg.jpg" class="bg-room" alt="Room Background">
                 <div id="hotspots">
                     <div class="hotspot" id="click-undangan" onclick="showModal('detail')"><span class="label">📜 Detail Undangan</span></div>
                     <div class="hotspot" id="click-laptop" onclick="showModal('rsvp')"><span class="label">💻 Buku Tamu & Ucapan</span></div>
