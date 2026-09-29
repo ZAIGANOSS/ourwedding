@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Saddam & Jidah Wedding</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     
@@ -19,13 +19,19 @@
         
         body { 
             margin: 0; padding: 0; background-color: #000;
-            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+            display: flex; justify-content: center; align-items: center; 
+            min-height: 100vh; height: 100vh;
             overflow: hidden; user-select: none; -webkit-user-select: none;
         }
 
+        /* --- VIEWPORT FULLSCREEN --- */
         #viewport {
-            position: relative; width: 100%; max-width: 450px; height: 100vh; max-height: 800px;
-            overflow: hidden; background: #000;
+            position: relative; 
+            width: 100vw; 
+            height: 100vh; 
+            max-width: 500px; /* Batas lebar aman untuk tampilan desktop/tablet */
+            overflow: hidden; 
+            background: #1a120b;
         }
 
         /* --- MAIN MENU COVER --- */
@@ -38,8 +44,11 @@
         }
 
         .bg-menu-img {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
-            image-rendering: pixelated; z-index: 1;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            object-fit: cover;
+            image-rendering: pixelated; 
+            image-rendering: crisp-edges;
+            z-index: 1;
         }
 
         #stars-container {
@@ -71,31 +80,52 @@
         }
         .btn-buka:active { transform: translateY(2px); box-shadow: 0 1px 0 #8c3333; }
 
-        /* --- INTERACTIVE ROOM --- */
+        /* --- INTERACTIVE ROOM (FULLSCREEN & ACCURATE HOTSPOTS) --- */
         #room-screen {
             position: absolute; width: 100%; height: 100%; display: none;
             font-family: var(--font-clear);
         }
 
+        /* Kontainer scene menjaga rasio agar posisi hotspot tidak meleset */
+        .scene-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         .bg-room {
-            width: 100%; height: 100%; object-fit: fill; image-rendering: pixelated;
+            width: 100%; height: 100%; 
+            object-fit: cover; 
+            image-rendering: pixelated; 
+            image-rendering: crisp-edges;
+        }
+
+        #hotspots {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
         }
 
         .hotspot {
             position: absolute; cursor: pointer; display: flex; align-items: center; justify-content: center;
             -webkit-tap-highlight-color: transparent; z-index: 10;
+            pointer-events: auto;
         }
 
-        #click-undangan  { top: 45%; left: 4%; width: 23%; height: 15%; }  
-        #click-laptop    { top: 44%; left: 32%; width: 38%; height: 17%; } 
+        #click-undangan   { top: 45%; left: 4%; width: 23%; height: 15%; }  
+        #click-laptop     { top: 44%; left: 32%; width: 38%; height: 17%; } 
         #click-perjalanan { top: 61%; left: 47%; width: 21%; height: 6%; }  
-        #click-foto      { top: 9%; left: 30%; width: 42%; height: 24%; }  
-        #click-hadiah    { top: 82%; left: 10%; width: 27%; height: 15%; } 
+        #click-foto       { top: 9%; left: 30%; width: 42%; height: 24%; }  
+        #click-hadiah     { top: 82%; left: 10%; width: 27%; height: 15%; } 
 
         .label {
             position: absolute; background: var(--bg-dark); color: var(--primary);
-            font-size: 12px; padding: 5px 10px; border: 2px solid var(--primary);
+            font-size: 11px; padding: 4px 8px; border: 2px solid var(--primary);
             border-radius: 4px; white-space: nowrap; font-weight: bold; pointer-events: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
         #click-foto .label { bottom: -22px; }
@@ -108,7 +138,7 @@
         .modal-overlay {
             display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); z-index: 200; justify-content: center; align-items: center;
-            padding: 20px; font-family: var(--font-clear);
+            padding: 16px; font-family: var(--font-clear);
         }
 
         .modal-content {
@@ -120,7 +150,7 @@
         .modal-header { padding: 15px; text-align: center; border-bottom: 2px dashed var(--primary); }
         .modal-header h3 { margin: 0; font-family: var(--font-pixel); font-size: 11px; color: var(--primary); line-height: 1.5; }
 
-        .modal-body { padding: 20px; text-align: center; color: #fff; line-height: 1.6; font-size: 15px; font-weight: bold; }
+        .modal-body { padding: 20px; text-align: center; color: #fff; line-height: 1.6; font-size: 14px; font-weight: bold; }
 
         .btn-back {
             background: var(--bg-dark); color: var(--primary); border: none;
@@ -130,12 +160,12 @@
 
         /* --- CSS LIVE COMMENTS AREA --- */
         .comments-container { margin-top: 20px; border-top: 2px dashed var(--primary); padding-top: 15px; text-align: left; }
-        .comments-title { font-size: 13px; color: var(--primary); margin-bottom: 10px; font-weight: bold; text-transform: uppercase; }
+        .comments-title { font-size: 12px; color: var(--primary); margin-bottom: 10px; font-weight: bold; text-transform: uppercase; }
         .comments-list { max-height: 200px; overflow-y: auto; }
         .comment-item { background: #1a120b; border: 1px solid #4a3423; padding: 8px 10px; border-radius: 4px; margin-bottom: 8px; }
         .comment-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
-        .comment-user { color: var(--primary); font-size: 13px; font-weight: bold; }
-        .comment-status { font-size: 10px; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
+        .comment-user { color: var(--primary); font-size: 12px; font-weight: bold; }
+        .comment-status { font-size: 9px; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
         .status-hadir { background: #557a46; color: #fff; }
         .status-ragu { background: #d4823a; color: #fff; }
         .status-absen { background: #8c3333; color: #fff; }
@@ -144,7 +174,7 @@
 
         /* --- CSS GRID UNTUK GALERI FOTO --- */
         .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
-        .gallery-item { width: 100%; height: 130px; object-fit: cover; border: 2px solid var(--primary); border-radius: 4px; cursor: pointer; }
+        .gallery-item { width: 100%; height: 120px; object-fit: cover; border: 2px solid var(--primary); border-radius: 4px; cursor: pointer; }
 
         /* --- STYLING UTILS --- */
         #music-btn {
@@ -154,7 +184,7 @@
             align-items: center; justify-content: center; font-size: 18px;
         }
 
-        .btn-wa { display: block; width: 100%; background: #557a46; color: white; padding: 10px; text-decoration: none; border-radius: 4px; margin-top: 12px; font-weight: bold; font-size: 13px; text-align: center; }
+        .btn-wa { display: block; width: 100%; background: #557a46; color: white; padding: 10px; text-decoration: none; border-radius: 4px; margin-top: 12px; font-weight: bold; font-size: 12px; text-align: center; }
         .copy-card { background: #1a120b; padding: 12px; border-radius: 4px; border: 1px solid var(--primary); margin: 12px 0; text-align: left; }
         .input-form { width: 100%; padding: 10px; margin: 6px 0; background-color: #1a120b; border: 1px solid var(--primary); color: #fff; font-family: var(--font-clear); font-size: 13px; }
 
@@ -172,7 +202,7 @@
         <button id="music-btn" onclick="toggleAudio()">🔊</button>
 
         <div id="cover-screen">
-            <img src="bg_menu.png" class="bg-menu-img">
+            <img src="bg_menu.png" class="bg-menu-img" alt="Cover Background">
             <div id="stars-container"></div>
             <div class="menu-ui">
                 <button class="btn-buka" onclick="startApp()">BUKA UNDANGAN</button>
@@ -180,13 +210,15 @@
         </div>
 
         <div id="room-screen">
-            <img src="bg.png" class="bg-room">
-            <div id="hotspots">
-                <div class="hotspot" id="click-undangan" onclick="showModal('detail')"><span class="label">📜 Detail Undangan</span></div>
-                <div class="hotspot" id="click-laptop" onclick="showModal('rsvp')"><span class="label">💻 Buku Tamu & Ucapan</span></div>
-                <div class="hotspot" id="click-perjalanan" onclick="showModal('story')"><span class="label">🖋️ Cerita Kami</span></div>
-                <div class="hotspot" id="click-foto" onclick="showModal('gallery')"><span class="label">🖼️ Galeri Foto</span></div>
-                <div class="hotspot" id="click-hadiah" onclick="showModal('gift')"><span class="label">🎁 Kirim Hadiah</span></div>
+            <div class="scene-container">
+                <img src="bg.png" class="bg-room" alt="Room Background">
+                <div id="hotspots">
+                    <div class="hotspot" id="click-undangan" onclick="showModal('detail')"><span class="label">📜 Detail Undangan</span></div>
+                    <div class="hotspot" id="click-laptop" onclick="showModal('rsvp')"><span class="label">💻 Buku Tamu & Ucapan</span></div>
+                    <div class="hotspot" id="click-perjalanan" onclick="showModal('story')"><span class="label">🖋️ Cerita Kami</span></div>
+                    <div class="hotspot" id="click-foto" onclick="showModal('gallery')"><span class="label">🖼️ Galeri Foto</span></div>
+                    <div class="hotspot" id="click-hadiah" onclick="showModal('gift')"><span class="label">🎁 Kirim Hadiah</span></div>
+                </div>
             </div>
         </div>
 
@@ -199,7 +231,7 @@
         </div>
 
         <div id="lightbox" class="lightbox-overlay" onclick="this.style.display='none'">
-            <img id="lightbox-img" class="lightbox-img" src="">
+            <img id="lightbox-img" class="lightbox-img" src="" alt="Enlarged Photo">
         </div>
     </div>
 
@@ -253,7 +285,7 @@
             fetch(SCRIPT_URL)
                 .then(response => response.json())
                 .then(data => {
-                    if(data.length === 0) {
+                    if(!data || data.length === 0) {
                         listContainer.innerHTML = '<p class="no-comment">Belum ada ucapan. Jadilah yang pertama!</p>';
                         return;
                     }
@@ -261,8 +293,8 @@
                     listContainer.innerHTML = '';
                     data.forEach(item => {
                         let statusClass = 'status-hadir';
-                        if(item.kehadiran.includes('Ragu')) statusClass = 'status-ragu';
-                        if(item.kehadiran.includes('Maaf') || item.kehadiran.includes('Berhalangan')) statusClass = 'status-absen';
+                        if(item.kehadiran && item.kehadiran.includes('Ragu')) statusClass = 'status-ragu';
+                        if(item.kehadiran && (item.kehadiran.includes('Maaf') || item.kehadiran.includes('Berhalangan'))) statusClass = 'status-absen';
 
                         const itemHtml = `
                             <div class="comment-item">
@@ -345,18 +377,18 @@
                     
                     <div style="background:#1a120b; padding:12px; margin:10px 0; border:2px solid var(--primary); text-align:left; border-radius:4px;">
                         <span style="background:var(--primary); color:#000; font-size:10px; padding:2px 6px; font-weight:900;">ACARA MEMPELAI WANITA (AKAD & RESEPSI)</span>
-                        <p style="margin:10px 0 4px 0; font-size:14px;"><b>Hari, Tanggal:</b> Sabtu, 15 Agustus 2026</p>
-                        <p style="margin:4px 0 4px 0; font-size:14px;"><b>Waktu:</b> 08:00 WITA - Selesai</p>
-                        <p style="margin:4px 0 10px 0; font-size:14px;"><b>Lokasi:</b> Kediaman Mempelai Wanita</p>
+                        <p style="margin:10px 0 4px 0; font-size:13px;"><b>Hari, Tanggal:</b> Sabtu, 15 Agustus 2026</p>
+                        <p style="margin:4px 0 4px 0; font-size:13px;"><b>Waktu:</b> 08:00 WITA - Selesai</p>
+                        <p style="margin:4px 0 10px 0; font-size:13px;"><b>Lokasi:</b> Kediaman Mempelai Wanita</p>
                         
                         <a href="https://maps.app.goo.gl/FLNX9ep2mk9STGwDA" target="_blank" class="btn-wa">🗺️ BUKA GOOGLE MAPS LOKASI 1</a>
                     </div>
                     
                     <div style="background:#1a120b; padding:12px; border:2px solid var(--accent); text-align:left; border-radius:4px;">
                         <span style="background:var(--accent); color:#fff; font-size:10px; padding:2px 6px; font-weight:900;">RESEPSI (PIHAK PRIA)</span>
-                        <p style="margin:10px 0 4px 0; font-size:14px;"><b>Hari, Tanggal:</b> Kamis, 08 Oktober 2026</p>
-                        <p style="margin:4px 0 4px 0; font-size:14px;"><b>Waktu:</b> 08:00 WITA - Selesai</p>
-                        <p style="margin:4px 0 10px 0; font-size:14px;"><b>Lokasi:</b> Kediaman Mempelai Pria</p>
+                        <p style="margin:10px 0 4px 0; font-size:13px;"><b>Hari, Tanggal:</b> Kamis, 08 Oktober 2026</p>
+                        <p style="margin:4px 0 4px 0; font-size:13px;"><b>Waktu:</b> 08:00 WITA - Selesai</p>
+                        <p style="margin:4px 0 10px 0; font-size:13px;"><b>Lokasi:</b> Kediaman Mempelai Pria</p>
                         
                         <a href="https://maps.app.goo.gl/8B3fMY7RoXM9CUw37" target="_blank" class="btn-wa" style="background:var(--accent)">🗺️ BUKA GOOGLE MAPS LOKASI 2</a>
                     </div>`;
@@ -371,7 +403,7 @@
                         <option>Maaf, Berhalangan Hadir</option>
                     </select>
                     <textarea id="in-doa" class="input-form" rows="3" placeholder="Tulis Ucapan Selamat & Doa Restu Di Sini..."></textarea>
-                    <button id="btn-kirim-rsvp" onclick="kirimRSVP()" class="btn-wa" style="background:var(--primary); color:#000; font-size:13px; width:100%; cursor:pointer; margin-top:8px; border:none;">🚀 KIRIM UCAPAN DIGITAL</button>
+                    <button id="btn-kirim-rsvp" onclick="kirimRSVP()" class="btn-wa" style="background:var(--primary); color:#000; font-size:12px; width:100%; cursor:pointer; margin-top:8px; border:none;">🚀 KIRIM UCAPAN DIGITAL</button>
                     
                     <div class="comments-container">
                         <div class="comments-title">💬 UCAPAN DAN DOA</div>
@@ -381,45 +413,45 @@
             } else if (type === 'story') {
                 title.innerText = "OUR LOVE STORY";
                 body.innerHTML = `
-                    <div style="text-align:left; font-size:14px;">
+                    <div style="text-align:left; font-size:13px;">
                         <div style="border-left:3px solid var(--primary); padding-left:12px; margin-bottom:15px;">
-                            <p style="color:var(--primary); font-weight:bold; margin:0; font-size:15px;">2015 - Satu Sekolah</p>
+                            <p style="color:var(--primary); font-weight:bold; margin:0; font-size:14px;">2015 - Satu Sekolah</p>
                             <p style="margin:4px 0 0 0; text-align:justify; color:#eee; font-weight:normal;">Kami pernah berada di sekolah dan kelas yg sama, menjalani hari-hari di lingkungan yang sama. Namun saat itu kami hanyalah dua orang teman sekelas biasa, tidak ada rasa dan tidak pernah terbayang terpikir bisa menjalin hubungan lebih.</p>
                         </div>
                         <div style="border-left:3px solid var(--primary); padding-left:12px; margin-bottom:15px;">
-                            <p style="color:var(--primary); font-weight:bold; margin:0; font-size:15px;">2018 - Mulai Dekat</p>
+                            <p style="color:var(--primary); font-weight:bold; margin:0; font-size:14px;">2018 - Mulai Dekat</p>
                             <p style="margin:4px 0 0 0; text-align:justify; color:#eee; font-weight:normal;">Seiring berjalannya waktu kami memiliki komunikasi yang lebih intens karena sama-sama ingin memasuki universitas yang sama. Dari situ kami mulai merasa nyaman dan menemukan bahwa ada banyak hal yang bisa kami bagi bersama.</p>
                         </div>
                         <div style="border-left:3px solid var(--primary); padding-left:12px;">
-                            <p style="color:var(--primary); font-weight:bold; margin:0; font-size:15px;">2026 - Jadi Tujuan</p>
+                            <p style="color:var(--primary); font-weight:bold; margin:0; font-size:14px;">2026 - Jadi Tujuan</p>
                             <p style="margin:4px 0 0 0; text-align:justify; color:#eee; font-weight:normal;">Dari dua orang teman sekelas, kini kami berjalan menuju arah yang sama. Perjalanan ini membawa kami pada sebuah keyakinan bahwa kebersamaan ini bukan lagi tentang kebetulan, melainkan sebuah tujuan yang ingin kami jalani bersama.</p>
                         </div>
                     </div>`;
             } else if (type === 'gallery') {
                 title.innerText = "PREWEDDING GALLERY";
                 body.innerHTML = `
-                    <p style="font-size:13px; margin-bottom:10px; color:#ddd;">Klik foto untuk memperbesar tampilan</p>
+                    <p style="font-size:12px; margin-bottom:10px; color:#ddd;">Klik foto untuk memperbesar tampilan</p>
                     <div class="gallery-grid">
-                        <img src="p1.jpg" class="gallery-item" onclick="openLightbox('p1.jpg')">
-                        <img src="p2.jpg" class="gallery-item" onclick="openLightbox('p2.jpg')">
-                        <img src="p3.jpg" class="gallery-item" onclick="openLightbox('p3.jpg')">
-                        <img src="p4.jpg" class="gallery-item" onclick="openLightbox('p4.jpg')">
+                        <img src="p1.jpg" class="gallery-item" onclick="openLightbox('p1.jpg')" alt="Gallery 1">
+                        <img src="p2.jpg" class="gallery-item" onclick="openLightbox('p2.jpg')" alt="Gallery 2">
+                        <img src="p3.jpg" class="gallery-item" onclick="openLightbox('p3.jpg')" alt="Gallery 3">
+                        <img src="p4.jpg" class="gallery-item" onclick="openLightbox('p4.jpg')" alt="Gallery 4">
                     </div>`;
             } else if (type === 'gift') {
                 title.innerText = "WEDDING GIFT VIRTUAL";
                 body.innerHTML = `
-                    <p style="font-size:14px; margin-bottom:15px;">Bagi keluarga dan rekan yang ingin mengirimkan tanda kasih virtual, dapat melalui rekening di bawah ini:</p>
+                    <p style="font-size:13px; margin-bottom:15px;">Bagi keluarga dan rekan yang ingin mengirimkan tanda kasih virtual, dapat melalui rekening di bawah ini:</p>
                     <div class="copy-card">
-                        <p style="margin:0; font-weight:bold; color:var(--primary); font-size:12px;">BANK BCA</p>
-                        <p style="font-size:22px; color:#fff; font-weight:bold; margin:4px 0;">782-052-2090</p>
-                        <p style="margin:0 0 10px 0; font-size:13px; color:#ccc;">a.n. Saddam Muhammad Al-Khadaffi</p>
-                        <button onclick="navigator.clipboard.writeText('7820522090'); alert('No. Rekening BCA Saddam Berhasil Disalin!')" style="background:var(--bg-dark); border:1px solid var(--primary); color:var(--primary); padding:6px 12px; cursor:pointer; font-weight:bold; font-size:12px; border-radius:4px;">📋 Salin No. Rekening</button>
+                        <p style="margin:0; font-weight:bold; color:var(--primary); font-size:11px;">BANK BCA</p>
+                        <p style="font-size:20px; color:#fff; font-weight:bold; margin:4px 0;">782-052-2090</p>
+                        <p style="margin:0 0 10px 0; font-size:12px; color:#ccc;">a.n. Saddam Muhammad Al-Khadaffi</p>
+                        <button onclick="navigator.clipboard.writeText('7820522090'); alert('No. Rekening BCA Saddam Berhasil Disalin!')" style="background:var(--bg-dark); border:1px solid var(--primary); color:var(--primary); padding:6px 12px; cursor:pointer; font-weight:bold; font-size:11px; border-radius:4px;">📋 Salin No. Rekening</button>
                     </div>
                     <div class="copy-card">
-                        <p style="margin:0; font-weight:bold; color:var(--primary); font-size:12px;">E-WALLET DANA</p>
-                        <p style="font-size:22px; color:#fff; font-weight:bold; margin:4px 0;">0895-7009-10063</p>
-                        <p style="margin:0 0 10px 0; font-size:13px; color:#ccc;">a.n. Saddam Muhammad Al-Khadaffi</p>
-                        <button onclick="navigator.clipboard.writeText('0895700910063'); alert('Nomor DANA Saddam Berhasil Disalin!')" style="background:var(--bg-dark); border:1px solid var(--primary); color:var(--primary); padding:6px 12px; cursor:pointer; font-weight:bold; font-size:12px; border-radius:4px;">📋 Salin Nomor DANA</button>
+                        <p style="margin:0; font-weight:bold; color:var(--primary); font-size:11px;">E-WALLET DANA</p>
+                        <p style="font-size:20px; color:#fff; font-weight:bold; margin:4px 0;">0895-7009-10063</p>
+                        <p style="margin:0 0 10px 0; font-size:12px; color:#ccc;">a.n. Saddam Muhammad Al-Khadaffi</p>
+                        <button onclick="navigator.clipboard.writeText('0895700910063'); alert('Nomor DANA Saddam Berhasil Disalin!')" style="background:var(--bg-dark); border:1px solid var(--primary); color:var(--primary); padding:6px 12px; cursor:pointer; font-weight:bold; font-size:11px; border-radius:4px;">📋 Salin Nomor DANA</button>
                     </div>`;
             }
         }
