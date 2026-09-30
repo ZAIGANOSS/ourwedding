@@ -184,6 +184,16 @@
         }
 
         .btn-wa { display: block; width: 100%; background: #557a46; color: white; padding: 10px; text-decoration: none; border-radius: 4px; margin-top: 12px; font-weight: bold; font-size: 12px; text-align: center; }
+        
+        /* Tombol disabled untuk peta yang dinonaktifkan */
+        .btn-disabled {
+            background: #555555 !important;
+            color: #aaa !important;
+            cursor: not-allowed !important;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
         .copy-card { background: #1a120b; padding: 12px; border-radius: 4px; border: 1px solid var(--primary); margin: 12px 0; text-align: left; }
         .input-form { width: 100%; padding: 10px; margin: 6px 0; background-color: #1a120b; border: 1px solid var(--primary); color: #fff; font-family: var(--font-clear); font-size: 13px; }
 
@@ -380,7 +390,7 @@
                         <p style="margin:4px 0 4px 0; font-size:13px;"><b>Waktu:</b> 08:00 WITA - Selesai</p>
                         <p style="margin:4px 0 10px 0; font-size:13px;"><b>Lokasi:</b> Kediaman Mempelai Wanita</p>
                         
-                        <a href="https://maps.app.goo.gl/FLNX9ep2mk9STGwDA" target="_blank" class="btn-wa">🗺️ BUKA GOOGLE MAPS LOKASI 1</a>
+                        <span class="btn-wa btn-disabled">🗺️ GOOGLE MAPS LOKASI 1 (TIDAK TERSEDIA)</span>
                     </div>
                     
                     <div style="background:#1a120b; padding:12px; border:2px solid var(--accent); text-align:left; border-radius:4px;">
